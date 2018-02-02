@@ -20,6 +20,7 @@ class aixldap (
     },
   }
 
+# DO SOMETHING TO ENABLE LDAP
 
 
 
