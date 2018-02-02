@@ -6,6 +6,21 @@
 #
 # @example
 #   include aixldap
-class aixldap {
+class aixldap (
+) {
+
+  # Ensure Local users authenticate locally
+  # NOTE: root and virtuser will be handled elsewhere
+  $local_users = split($facts['aix_local_users'], ' ')
+  user { $local_users:
+    ensure     => 'present',
+    attributes => {
+      'SYSTEM'   => 'compat',
+      'registry' => 'files',
+    },
+  }
+
+
+
 
 }
