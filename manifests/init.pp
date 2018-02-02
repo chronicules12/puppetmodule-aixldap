@@ -12,12 +12,16 @@ class aixldap (
   # Ensure Local users authenticate locally
   # NOTE: root and virtuser will be handled elsewhere
   $local_users = split($facts['aix_local_users'], ' ')
-  user { $local_users:
-    ensure     => 'present',
-    attributes => [
-      'SYSTEM=compat',
-      'registry=files',
-    ],
+  $local_users.each |$user| {
+    if !defined(User[$user]) {
+      user { $user:
+        ensure     => 'present',
+        attributes => [
+          'SYSTEM=compat',
+          'registry=files',
+        ],
+      }
+    }
   }
 
 # DO SOMETHING TO ENABLE LDAP
