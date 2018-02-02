@@ -1,0 +1,24 @@
+{
+  "name": "davita-aixldap",
+  "version": "0.1.0",
+  "author": "soucho",
+  "summary": "install ldap auth for AIX",
+  "license": "Apache-2.0",
+  "source": "https://bitbucket.davita.com/pup/davita-aixldap",
+  "project_page": "https://bitbucket.davita.com/pup/davita-aixldap",
+  "dependencies": [
+
+  ],
+  "operatingsystem_support": [
+
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 4.7.0 < 6.0.0"
+    }
+  ],
+  "pdk-version": "1.3.2",
+  "template-url": "file:///opt/puppetlabs/pdk/share/cache/pdk-templates.git",
+  "template-ref": "1.3.2-0-g07678c8"
+}
