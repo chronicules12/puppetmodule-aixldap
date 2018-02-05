@@ -7,11 +7,11 @@
 # @example
 #   include aixldap
 class aixldap (
+  String $base_dn,
   String $bind_dn,
   String $bind_pwd,
-  Variant[Array[String],String] $serverlist = undef,
+  Variant[Array[String],String] $serverlist,
   String $pkg_src_baseurl = 'https://artifactory.davita.com/aix_ldap/',
-  String $base_dn = undef,
   String $auth_type = 'unix_auth',
   String $default_loc = 'ldap',
   String $domain = $facts['networking']['domain'],
