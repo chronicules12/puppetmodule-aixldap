@@ -36,4 +36,7 @@ class aixldap (
   # Install
   include aixldap::install
 
+  # Configire
+  include aixldap::configure
+
 }

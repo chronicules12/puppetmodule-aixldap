@@ -1,0 +1,77 @@
+# IBM_PROLOG_BEGIN_TAG 
+# This is an automatically generated prolog. 
+#  
+# bos61D src/bos/etc/security/ldap/sfur2user.map 1.2 
+#  
+# Licensed Materials - Property of IBM 
+#  
+# Restricted Materials of IBM 
+#  
+# COPYRIGHT International Business Machines Corp. 2006,2008 
+# All Rights Reserved 
+#  
+# US Government Users Restricted Rights - Use, duplication or 
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp. 
+#  
+# @(#)76	1.2  src/bos/etc/security/ldap/sfur2user.map, cmdsadm, bos61D, d2008_14B0 3/19/08 11:50:56
+# IBM_PROLOG_END_TAG 
+# =========================================================================
+#
+# MS Windows 2003 R2 LDAP user attribute name mapping table
+#
+# Format:
+# AIX_ATTR   AIX_ATTR_TYPE   LDAP_ATTR   LDAP_VALUE  LDAP_UNIT	TO_BE_CACHED
+#
+# AIX_ATTR:     AIX attribute name
+# AIX_ATTR_TYPE AIX attribute type - SEC_CHAR, SEC_INT, SEC_LIST, SEC_BOOL
+# LDAP_ATTR     LDAP attribute name
+# LDAP_VALUE    LDAP attribute type - "s" for single-valued attribues
+#               or "m" for multi-valued attributes.
+# LDAP_UNIT	LDAP unit for certain attributes. Valid values are:
+#
+#		seconds, minutes, hours, days, weeks, months, and years
+#		for maxage, minage, maxexpires, and pwdwarntime.
+#
+#		bytes, 512bblocks, kilobytes, megabytes, and gigabytes
+#		for cpu, cpu_hard, fsize, fsize_hard, rss, rss_hard,
+#		stack, stack_hard.
+#
+#		na for all other attributes or if no unit mapping
+#		required.
+#
+#		For example, maxage on AIX is in weeks. If your
+#		corresponding LDAP attribute uses other unit, e.g.,
+#		seconds, you will need to set the unit to seconds, so
+#		the mapping line becomes:
+#
+#		maxage  SEC_INT  shadowMax  s   seconds
+# TO_BE_CACHED  It will take values yes or no. The attribute mentioned
+#		no will not be checked in cache.The value will be directly
+#		fetched from server.
+#
+# NOTE:
+# In case the client needs to talk to a LDAP server with different
+# schema (attributes) mapping than the following, modify the corresponding
+# LDAP attributes to match those defined in the new LDAP server, and
+# comment out the lines where the attribute(s) is not defined.
+#
+# Save a copy of this file before you modify entries in this file.
+#
+# =========================================================================
+username	SEC_CHAR	uid			s	na	yes
+#username	SEC_CHAR	sAMAccountName		s	na	yes
+id		SEC_INT		uidNumber		s	na	yes
+pgrp		SEC_CHAR	gidNumber		s	na	yes
+home		SEC_CHAR	unixhomeDirectory	s	na	yes
+shell		SEC_CHAR	loginShell		s	na	yes
+gecos		SEC_CHAR	gecos			s	na	yes
+spassword	SEC_CHAR	unicodePwd		s
+lastupdate	SEC_INT		shadowLastChange	s	days	yes
+maxage		SEC_INT		shadowMax		s	na	yes
+minage		SEC_INT		shadowMin		s	na	yes
+maxexpired	SEC_INT		shadowExpire		s	na	yes
+pwdwarntime	SEC_INT		shadowWarning		s	na	yes
+pgid		SEC_INT		gidnumber		s	na	yes
+#auth_name	SEC_CHAR	sAMAccountName		s	na	yes 	
+#spassword	SEC_CHAR	unicodePwd		s	na	yes
+#spassword	SEC_CHAR	unixuserPassword	s	na	yes
