@@ -7,6 +7,15 @@
 # @example
 #   include aixldap
 class aixldap (
+  String $bind_dn,
+  String $bind_pwd,
+  Variant[Array[String],String] $serverlist = undef,
+  String $pkg_src_baseurl = 'https://artifactory.davita.com/aix_ldap/',
+  String $base_dn = undef,
+  String $auth_type = 'unix_auth',
+  String $default_loc = 'ldap',
+  String $domain = $facts['networking']['domain'],
+  String $kerb_realm = upcase($facts['networking']['domain']),
 ) {
 
   # Ensure Local users authenticate locally
@@ -24,8 +33,7 @@ class aixldap (
     }
   }
 
-# DO SOMETHING TO ENABLE LDAP
-
-
+  # Install
+  include aixldap::install
 
 }
