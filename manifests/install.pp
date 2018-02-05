@@ -48,9 +48,6 @@ class aixldap::install (
                 'idsldap.cltbase62.adt',
                 'idsldap.cltbase62.rte',
                 'idsldap.cltjava62.rte',
-                'idsldap.clt32bit62.rte',
-                'idsldap.clt64bit62.rte',
-                'idsldap.cltbase62.rte',
   ]
 
   $ldap_pkgs.each |$pkg| {
