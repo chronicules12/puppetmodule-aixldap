@@ -53,7 +53,7 @@ class aixldap::install (
                 'idsldap.cltbase62.rte',
   ]
 
-  $kerb_pkgs.each |$pkg| {
+  $ldap_pkgs.each |$pkg| {
     package { $pkg:
       ensure => 'present',
       source => "${pkg_source}/ldap/${pkg}",
