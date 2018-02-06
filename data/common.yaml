@@ -1,6 +1,6 @@
 ---
 aixldap::auth_type: unix_auth
 aixldap::default_loc: ldap
-aixldap::domain: %{facts.networking.domain}
-aixldap::kerb_realm: %{$facts.networking.domain.upcase}
+aixldap::domain: "%{facts.networking.domain}"
+aixldap::kerb_realm: "%{facts.networking.domain.upcase}"
 
