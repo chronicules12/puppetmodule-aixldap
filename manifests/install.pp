@@ -10,38 +10,18 @@ class aixldap::install (
   $pkg_source = aixldap::pkg_src_baseurl,
 ) {
 
-  # Install GSKit8
-  $gskit_pkgs = [ 'GSKit8.gskcrypt32.ppc.rte',
-                  'GSKit8.gskcrypt64.ppc.rte',
-                  'GSKit8.gskssl32.ppc.rte',
-                  'GSKit8.gskssl64.ppc.rte',
-                  'gsksa.rte',
-                  'gskta.rte',
-  ]
-
-  $gskit_pkgs.each |$pkg| {
-    package { $pkg:
-      ensure => 'present',
-      source => "${pkg_source}/gskit/${pkg}",
-    }
-  }
-
-  # Install LDAP
-  $kerb_pkgs = ['krb5.msg.en_US.client.rte',
+  # Install GSKit8, KRB5 and LDAP
+  $packages = [ 'GSKit8.gskcrypt32.ppc.rte',
+                'GSKit8.gskcrypt64.ppc.rte',
+                'GSKit8.gskssl32.ppc.rte',
+                'GSKit8.gskssl64.ppc.rte',
+                'gsksa.rte',
+                'gskta.rte',
+                'krb5.msg.en_US.client.rte',
                 'krb5.lic',
                 'krb5.client.samples',
                 'krb5.client.rte',
-  ]
-
-  $kerb_pkgs.each |$pkg| {
-    package { $pkg:
-      ensure => 'present',
-      source => "${pkg_source}/kerb/${pkg}",
-    }
-  }
-
-  # Install LDAP
-  $ldap_pkgs = ['idsldap.clt32bit62.rte',
+                'idsldap.clt32bit62.rte',
                 'idsldap.clt64bit62.rte',
                 'idsldap.clt_max_crypto32bit62.rte',
                 'idsldap.clt_max_crypto64bit62.rte',
@@ -50,10 +30,10 @@ class aixldap::install (
                 'idsldap.cltjava62.rte',
   ]
 
-  $ldap_pkgs.each |$pkg| {
+  $packages.each |$pkg| {
     package { $pkg:
       ensure => 'present',
-      source => "${pkg_source}/ldap/${pkg}",
+      source => "${pkg_source}/${pkg}",
     }
   }
 
