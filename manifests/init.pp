@@ -6,16 +6,17 @@
 #
 # @example
 #   include aixldap
+#### NOTE: defaults are provided with module level hieradata
 class aixldap (
   String $base_dn,
   String $bind_dn,
   String $bind_pwd,
   Variant[Array[String],String] $serverlist,
-  String $pkg_src_baseurl = 'https://artifactory.davita.com/aix_ldap/',
-  String $auth_type = 'unix_auth',
-  String $default_loc = 'ldap',
-  String $domain = $facts['networking']['domain'],
-  String $kerb_realm = upcase($facts['networking']['domain']),
+  String $pkg_src_baseurl,
+  String $auth_type,
+  String $default_loc,
+  String $domain,
+  String $kerb_realm,
 ) {
 
   # Ensure Local users authenticate locally
@@ -33,7 +34,7 @@ class aixldap (
     }
   }
 
-  # Install
+  # Install Packages
   include aixldap::install
 
   # Configire
