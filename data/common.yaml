@@ -2,5 +2,13 @@
 aixldap::auth_type: unix_auth
 aixldap::default_loc: ldap
 aixldap::domain: "%{facts.networking.domain}"
-aixldap::kerb_realm: "%{facts.networking.domain.upcase}"
+aixldap::kdb_file: /usr/lib/security/adldap.kdb
+aixldap::kerb_realm: null
 
+aixldap::ssl_ca_cert_file: /usr/lib/security/adldap.crt
+aixldap::ssl_ca_cert_label: adldap
+aixldap::ssl_ca_cert_content: null
+aixldap::ssl_ca_cert_source: null
+
+
+aixldap::use_ssl: true

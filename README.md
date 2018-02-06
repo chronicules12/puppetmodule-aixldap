@@ -1,9 +1,7 @@
 
 # aixldap
 
-Welcome to your new module. A short overview of the generated parts can be found in the PDK documentation at https://puppet.com/pdk/latest/pdk_generating_modules.html .
-
-The README template below provides a starting point with details about what information to include in your README.
+This module will setup your AIX system to use AD LDAP Authentication.
 
 
 
@@ -43,9 +41,7 @@ If there's more that they should know about, though, this is the place to mentio
 
 ### Setup Requirements **OPTIONAL**
 
-If your module requires anything extra before setting up (pluginsync enabled, another module, etc.), mention it here.
-
-If your most recent release breaks compatibility or requires particular steps for upgrading, you might want to include an additional "Upgrading" section here.
+* You must have the LDAP packages hosted somewhere accessible to the AIX system.
 
 ### Beginning with aixldap
 
