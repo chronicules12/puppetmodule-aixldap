@@ -40,7 +40,7 @@ class aixldap::configure {
       before      => Exec['mksecldap'],
     }
 
-    $ssl_options = "-n 636 -k \'${kdb_file}\' -w \'${aixldap::kdb_password}\''"
+    $ssl_options = "-n 636 -k \'${kdb_file}\' -w \'${aixldap::kdb_password}\'"
   } else {
     $ssl_options = '-n 389'
   }
