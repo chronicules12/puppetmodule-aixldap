@@ -1,20 +1,8 @@
 # @api private
 # Avoid modifying private classes.
 # Configure AIXLDAP
-class aixldap::configure (
-  $use_ssl = $aixldap::use_ssl
-) {
+class aixldap::configure {
   assert_private('Please use aixldap main class')
-
-  # Default ldap config settings
-  $ldap_cfg_defaults = {
-    ldapservers => $aixldap::serverlist,
-    binddn      => $aixldap::bind_dn,
-    bindpwd     => $aixldap::bind_password,
-    basedn      => $aixldap::base_dn,
-    ldapsslkeyf => $aixldap::kdb_file,
-    authtype    => $aixldap::auth_type
-  }
 
   if $aixldap::use_ssl {
     # SSL Certificate
@@ -49,7 +37,35 @@ class aixldap::configure (
       command     => "gsk8capicmd_64 -cert -add -db \'${kdb_file}\' -pw \'${aixldap::kdb_password}\' -type cms -file \'${aixldap::ssl_ca_cert_file}\' -trust enable -format ascii -label \'${aixldap::ssl_ca_cert_label}\'",
       refreshonly => true,
       require     => Exec['create-keydb'],
+      before      => Exec['mksecldap'],
     }
+
+    $ssl_options = "-n 636 -k \'${kdb_file}\' -w \'${aixldap::kdb_password}\''"
+  } else {
+    $ssl_options = '-n 389'
+  }
+
+  # run mksecldap
+  exec { 'mksecldap':
+    command => "mksecldap -c -h \'${aixldap::ldapservers}\' -a \'${aixldap::bind_dn}\' -p \'${aixldap::bind_password}\' -d \'${aixldap::base_dn}\' ${ssl_options} -A ${aixldap::auth_type} -D ${aixldap::default_loc}",
+    unless  => "[ -f ${aixldap::ldap_cfg_file} ] && grep -q \'ldapservers:${aixldap::ldapservers}\'",
+  }
+
+
+  # Default ldap config settings
+  $ldap_cfg_defaults = {
+    ldapservers => $aixldap::ldapservers,
+    binddn      => $aixldap::bind_dn,
+    bindpwd     => $aixldap::bind_password,
+    basedn      => $aixldap::base_dn,
+    ldapsslkeyf => $aixldap::kdb_file,
+    authtype    => $aixldap::auth_type
+  }
+
+  file { $aixldap::ldap_cfg_file:
+    ensure => 'file',
+    owner  => 'root',
+    group  => 'system',
   }
 
 }

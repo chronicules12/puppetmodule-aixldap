@@ -11,12 +11,19 @@ class aixldap (
   String $base_dn,
   String $bind_dn,
   String $bind_password,
-  String $serverlist,
+  String $ldapservers,
+  String $pkg_src_baseurl,
   Optional[String] $ssl_ca_cert_content,
   Optional[String] $ssl_ca_cert_source,
-  # The rest of these options have reasonable defaults in hiera
-  Optional[String] $ssl_ca_cert_label,
-  Optional[String] $ssl_ca_cert_file,
+  String $ssl_ca_cert_label, # hiera
+  String $ssl_ca_cert_file, # hiera
+  String $user_map_file, # hiera
+  Optional[String] $user_map_content,
+  Optional[String] $user_map_source,
+  String $group_map_file, # hiera
+  Optional[String] $group_map_content,
+  Optional[String] $group_map_source,
+  String $ldap_cfg_file, #hiera
   String $auth_type, # hiera
   String $default_loc, # hiera
   String $domain, # hiera
@@ -24,7 +31,6 @@ class aixldap (
   Optional[String] $kdb_password, # hiera
   Optional[String] $kerb_realm, # hiera
   Boolean $use_ssl, # hiera
-  String $pkg_src_baseurl,
 ) {
 
   # Ensure Local users authenticate locally

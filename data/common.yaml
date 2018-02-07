@@ -11,5 +11,14 @@ aixldap::ssl_ca_cert_label: adldap
 aixldap::ssl_ca_cert_content: null
 aixldap::ssl_ca_cert_source: null
 
+aixldap::user_map_file: /etc/security/ldap/adldap-user.map
+aixldap::user_map_source: null
+aixldap::user_map_content: null
+
+aixldap::group_map_file: /etc/security/ldap/adldap-group.map
+aixldap::group_map_source: null
+aixldap::group_map_content: null
+
+aixldap::ldap_cfg_file: /etc/security/ldap/ldap.cfg
 
 aixldap::use_ssl: true
