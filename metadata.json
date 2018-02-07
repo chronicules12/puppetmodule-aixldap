@@ -10,7 +10,13 @@
 
   ],
   "operatingsystem_support": [
-
+    {
+      "operatingsystem": "AIX",
+      "operatingsystemrelease": [
+        "6.1",
+        "7.1"
+      ]
+    } 
   ],
   "requirements": [
     {
