@@ -10,21 +10,21 @@
 class aixldap (
   String $base_dn,
   String $bind_dn,
-  String $bind_pwd,
+  String $bind_password,
   String $serverlist,
   Optional[String] $ssl_ca_cert_content,
   Optional[String] $ssl_ca_cert_source,
   # The rest of these options have reasonable defaults in hiera
+  Optional[String] $ssl_ca_cert_label,
+  Optional[String] $ssl_ca_cert_file,
   String $auth_type, # hiera
   String $default_loc, # hiera
   String $domain, # hiera
   String $kdb_file, # hiera
-  String $kerb_realm, # hiera
-
+  Optional[String] $kdb_password, # hiera
+  Optional[String] $kerb_realm, # hiera
+  Boolean $use_ssl, # hiera
   String $pkg_src_baseurl,
-
-  String $ssl_ca_cert_file, # hiera
-
 ) {
 
   # Ensure Local users authenticate locally
@@ -40,6 +40,11 @@ class aixldap (
         ],
       }
     }
+  }
+
+  # Default Path
+  Exec {
+    path => '/usr/bin:/usr/sbin',
   }
 
   # Install Packages

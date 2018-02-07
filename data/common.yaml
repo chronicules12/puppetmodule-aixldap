@@ -3,6 +3,7 @@ aixldap::auth_type: unix_auth
 aixldap::default_loc: ldap
 aixldap::domain: "%{facts.networking.domain}"
 aixldap::kdb_file: /usr/lib/security/adldap.kdb
+aixldap::kdb_password: ChangeMe!12345
 aixldap::kerb_realm: null
 
 aixldap::ssl_ca_cert_file: /usr/lib/security/adldap.crt
