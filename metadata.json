@@ -2,7 +2,7 @@
   "name": "davita-aixldap",
   "version": "0.1.0",
   "author": "soucho",
-  "summary": "install ldap auth for AIX",
+  "summary": "Install ldap auth for AIX",
   "license": "Apache-2.0",
   "source": "https://bitbucket.davita.com/pup/davita-aixldap",
   "project_page": "https://bitbucket.davita.com/pup/davita-aixldap",
