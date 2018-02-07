@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 **Features**
 * Configure an SSL CA Certificate as Trusted in a KDB using gskit8
+* Run mksecldap
 
 **Bugfixes**
 
