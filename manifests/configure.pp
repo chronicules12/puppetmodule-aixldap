@@ -48,7 +48,7 @@ class aixldap::configure {
   # run mksecldap
   exec { 'mksecldap':
     command => "mksecldap -c -h \'${aixldap::ldapservers}\' -a \'${aixldap::bind_dn}\' -p \'${aixldap::bind_password}\' -d \'${aixldap::base_dn}\' ${ssl_options} -A ${aixldap::auth_type} -D ${aixldap::default_loc}",
-    unless  => ["test -f ${aixldap::ldap_cfg_file}", "grep -q \'ldapservers:${aixldap::ldapservers}\'"],
+    unless  => "test -f ${aixldap::ldap_cfg_file} && grep -q \'^ldapservers:${aixldap::ldapservers}\' ${aixldap::ldap_cfg_file}",
   }
 
 
