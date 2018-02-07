@@ -4,6 +4,7 @@ aixldap::default_loc: ldap
 aixldap::domain: "%{facts.networking.domain}"
 aixldap::kdb_file: /usr/lib/security/adldap.kdb
 aixldap::kdb_password: ChangeMe!12345
+aixldap::kdb_password_crypted: '{DESv2}B264CA89603640B735E5EFA3EA4D68789D1F7F57F0 BC7E1'
 aixldap::kerb_realm: null
 
 aixldap::ssl_ca_cert_file: /usr/lib/security/adldap.crt
@@ -11,14 +12,24 @@ aixldap::ssl_ca_cert_label: adldap
 aixldap::ssl_ca_cert_content: null
 aixldap::ssl_ca_cert_source: null
 
-aixldap::user_map_file: /etc/security/ldap/adldap-user.map
+aixldap::user_map_file: /etc/security/ldap/sfur2user.map
 aixldap::user_map_source: null
 aixldap::user_map_content: null
 
-aixldap::group_map_file: /etc/security/ldap/adldap-group.map
+aixldap::group_map_file: /etc/security/ldap/sfur2group.map
 aixldap::group_map_source: null
 aixldap::group_map_content: null
 
 aixldap::ldap_cfg_file: /etc/security/ldap/ldap.cfg
+aixldap::ldap_cfg_options:
+  serverschematype: sfur2
+  searchmode: ALL
+  ldapport: 389
+  ldapsslport: 636
+  useSSL: yes
+  userclasses: user,person,organizationalperson
+  groupclasses: group
+  userattrmappath: /etc/security/ldap/sfur2user.map
+  groupattrmappath: /etc/security/ldap/sfur2group.map
 
 aixldap::use_ssl: true

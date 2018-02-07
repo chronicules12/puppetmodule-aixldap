@@ -45,7 +45,7 @@ class aixldap::configure {
     $ssl_options = '-n 389'
   }
 
-  # run mksecldap
+  # run mksecldap - This seems to do a lot more than just setup the ldap.cfg, so we are going to execute it
   exec { 'mksecldap':
     command => "mksecldap -c -h \'${aixldap::ldapservers}\' -a \'${aixldap::bind_dn}\' -p \'${aixldap::bind_password}\' -d \'${aixldap::base_dn}\' ${ssl_options} -A ${aixldap::auth_type} -D ${aixldap::default_loc}",
     unless  => "test -f ${aixldap::ldap_cfg_file} && grep -q \'^ldapservers:${aixldap::ldapservers}\' ${aixldap::ldap_cfg_file}",
@@ -53,19 +53,27 @@ class aixldap::configure {
 
 
   # Default ldap config settings
-  $ldap_cfg_defaults = {
-    ldapservers => $aixldap::ldapservers,
-    binddn      => $aixldap::bind_dn,
-    bindpwd     => $aixldap::bind_password,
-    basedn      => $aixldap::base_dn,
-    ldapsslkeyf => $aixldap::kdb_file,
-    authtype    => $aixldap::auth_type
-  }
+  $ldap_cfgs = merge ( $aixldap::ldap_cfg_options, {
+    ldapservers          => $aixldap::ldapservers,
+    binddn               => $aixldap::bind_dn,
+    bindpwd              => $aixldap::bind_password_crypted,
+    basedn               => $aixldap::base_dn,
+    ldapsslkeyf          => $aixldap::kdb_file,
+    ldapsslkeypwd        => $aixldap::kdb_password_crypted,
+    authtype             => $aixldap::auth_type,
+    defaultentrylocation => $aixldap::default_loc,
+    userattrmappath      => $aixldap::user_map_file,
+    groupattrmappath     => $aixldap::group_map_file,
+    userbasedn           => "CN=Users,${aixldap::basedn}",
+    groupbaseddn         => "OU=Microsoft Exchange Security Groups,${aixldap::basedn}",
+    hostbaseddn          => "OU=Disabled,OU=ENT-Services,${aixldap::basedn}",
+  } )
 
   file { $aixldap::ldap_cfg_file:
-    ensure => 'file',
-    owner  => 'root',
-    group  => 'system',
+    ensure  => 'file',
+    owner   => 'root',
+    group   => 'system',
+    content => template(aixldap/ldap.cfg.erb),
   }
 
 }

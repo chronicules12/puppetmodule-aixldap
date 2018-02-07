@@ -11,6 +11,7 @@ class aixldap (
   String $base_dn,
   String $bind_dn,
   String $bind_password,
+  String $bind_password_crypted,
   String $ldapservers,
   String $pkg_src_baseurl,
   Optional[String] $ssl_ca_cert_content,
@@ -24,11 +25,13 @@ class aixldap (
   Optional[String] $group_map_content,
   Optional[String] $group_map_source,
   String $ldap_cfg_file, #hiera
+  Optional[Hash] $ldap_cfg_options, # hiera
   String $auth_type, # hiera
   String $default_loc, # hiera
   String $domain, # hiera
   String $kdb_file, # hiera
   Optional[String] $kdb_password, # hiera
+  Optional[String] $kdb_password_crypted, #hiera
   Optional[String] $kerb_realm, # hiera
   Boolean $use_ssl, # hiera
 ) {
