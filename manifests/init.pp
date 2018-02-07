@@ -2,7 +2,7 @@
 #
 # A description of what this class does
 #
-# @summary A short summary of the purpose of this class
+# @summary Setup AD LDAP Authentication on AIX
 #
 # @example
 #   include aixldap
@@ -10,13 +10,21 @@
 class aixldap (
   String $base_dn,
   String $bind_dn,
-  String $bind_pwd,
-  Variant[Array[String],String] $serverlist,
+  String $bind_password,
+  String $serverlist,
+  Optional[String] $ssl_ca_cert_content,
+  Optional[String] $ssl_ca_cert_source,
+  # The rest of these options have reasonable defaults in hiera
+  Optional[String] $ssl_ca_cert_label,
+  Optional[String] $ssl_ca_cert_file,
+  String $auth_type, # hiera
+  String $default_loc, # hiera
+  String $domain, # hiera
+  String $kdb_file, # hiera
+  Optional[String] $kdb_password, # hiera
+  Optional[String] $kerb_realm, # hiera
+  Boolean $use_ssl, # hiera
   String $pkg_src_baseurl,
-  String $auth_type,
-  String $default_loc,
-  String $domain,
-  String $kerb_realm,
 ) {
 
   # Ensure Local users authenticate locally
@@ -34,10 +42,18 @@ class aixldap (
     }
   }
 
+  # Default Path
+  Exec {
+    path => '/usr/bin:/usr/sbin',
+  }
+
   # Install Packages
   include aixldap::install
 
   # Configire
   include aixldap::configure
+
+  # Service
+  #include aixldap::service
 
 }

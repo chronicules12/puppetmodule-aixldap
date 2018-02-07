@@ -1,14 +1,13 @@
+# @api private
+# Avoid modifying private classes.
+#
 # aixldap::install
 #
-# A description of what this class does
+# Install the required packages for AIX LDAP Authentication.
 #
-# @summary A short summary of the purpose of this class
+# @summary Install the required packages for AIX LDAP Authentication.
 #
-# @example
-#   include aixldap::install
-class aixldap::install (
-  $pkg_source = aixldap::pkg_src_baseurl,
-) {
+class aixldap::install {
 
   # Install GSKit8, KRB5 and LDAP
   $packages = [ 'GSKit8.gskcrypt32.ppc.rte',
@@ -33,7 +32,7 @@ class aixldap::install (
   $packages.each |$pkg| {
     package { $pkg:
       ensure => 'present',
-      source => "${pkg_source}/${pkg}",
+      source => "${aixldap::pkg_src_baseurl}/${pkg}",
     }
   }
 
