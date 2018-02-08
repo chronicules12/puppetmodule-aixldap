@@ -32,7 +32,7 @@ class aixldap::install {
   $packages.each |$pkg| {
     package { $pkg:
       ensure => 'present',
-      source => "${aixldap::pkg_src_basepath}/${pkg}",
+      source => "${aixldap::pkg_src_path}",
     }
   }
 

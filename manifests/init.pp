@@ -13,7 +13,7 @@ class aixldap (
   String $bind_password,
   String $bind_password_crypted,
   String $ldapservers,
-  String $pkg_src_basepath,
+  String $pkg_src_path,
   Enum['running','stopped'] $service_ensure, # hiera
   Boolean $service_enable, #hiera
   Optional[String] $ssl_ca_cert_content,
