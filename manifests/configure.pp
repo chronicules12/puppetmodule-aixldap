@@ -12,7 +12,7 @@ class aixldap::configure {
       source  => $aixldap::ssl_ca_cert_source,
       mode    => '0644',
       owner   => 'root',
-      group   => 'system',
+      group   => 'security',
       notify  => Exec['trust-adldap-cert'],
     }
 
@@ -49,7 +49,7 @@ class aixldap::configure {
   # run mksecldap - This seems to do a lot more than just setup the ldap.cfg, so we are going to execute it
   exec { 'mksecldap':
     command => "mksecldap -c -h \'${aixldap::ldapservers}\' -a \'${aixldap::bind_dn}\' -p \'${aixldap::bind_password}\' -d \'${aixldap::base_dn}\' ${ssl_options} -A ${aixldap::auth_type} -D ${aixldap::default_loc}",
-    unless  => "test -f ${aixldap::ldap_cfg_file} && grep -q \'^ldapservers:${aixldap::ldapservers}\' ${aixldap::ldap_cfg_file}",
+    creates => '/usr/lib/libibmldap.a',
   }
 
 
@@ -75,7 +75,7 @@ class aixldap::configure {
   file { $aixldap::ldap_cfg_file:
     ensure  => 'file',
     owner   => 'root',
-    group   => 'system',
+    group   => 'security',
     content => template('aixldap/ldap.cfg.erb'),
     before  => Exec['mksecldap'],
     notify  => Service['secldapclntd'],
@@ -84,7 +84,7 @@ class aixldap::configure {
   file { $aixldap::user_map_file:
     ensure  => 'file',
     owner   => 'root',
-    group   => 'system',
+    group   => 'security',
     mode    => '0644',
     content => $aixldap::user_map_content,
     source  => $aixldap::user_map_source,
@@ -94,7 +94,7 @@ class aixldap::configure {
   file { $aixldap::group_map_file:
     ensure  => 'file',
     owner   => 'root',
-    group   => 'system',
+    group   => 'security',
     mode    => '0644',
     content => $aixldap::group_map_content,
     source  => $aixldap::group_map_source,
