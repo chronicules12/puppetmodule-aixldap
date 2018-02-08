@@ -53,7 +53,7 @@ class aixldap::configure {
 
 
   # Default ldap config settings
-  $ldap_cfgs = merge ( $aixldap::ldap_cfg_options, {
+  $ldap_cfg_defaults =  {
     ldapservers          => $aixldap::ldapservers,
     binddn               => $aixldap::bind_dn,
     bindpwd              => $aixldap::bind_password_crypted,
@@ -67,7 +67,9 @@ class aixldap::configure {
     userbasedn           => "CN=Users,${aixldap::base_dn}",
     groupbasedn          => "OU=Microsoft Exchange Security Groups,${aixldap::base_dn}",
     hostbasedn           => "OU=Disabled,OU=ENT-Services,${aixldap::base_dn}",
-  } )
+  }
+
+  $ldap_cfgs = merge ($ldap_cfg_defaults, $aixldap::ldap_cfg_options)
 
   file { $aixldap::ldap_cfg_file:
     ensure  => 'file',
