@@ -6,6 +6,7 @@ aixldap::kdb_file: /usr/lib/security/adldap.kdb
 aixldap::kdb_password: ChangeMe!12345
 aixldap::kdb_password_crypted: '{DESv2}B264CA89603640B735E5EFA3EA4D68789D1F7F57F0 BC7E1'
 aixldap::kerb_realm: null
+aixldap::pkg_src_basepath: /tmp/pkg
 
 aixldap::service_ensure: running
 aixldap::service_enable: true

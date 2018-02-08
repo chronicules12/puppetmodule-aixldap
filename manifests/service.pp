@@ -11,7 +11,6 @@ class aixldap::service {
     restart  => '/usr/sbin/restart-secldapclntd',
     status   => '/usr/sbin/ls-secldapclntd',
     provider => 'base',
-
   }
 
 }
