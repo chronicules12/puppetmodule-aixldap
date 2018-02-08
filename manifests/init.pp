@@ -38,6 +38,10 @@ class aixldap (
   Boolean $use_ssl, # hiera
 ) {
 
+  # Default Kerberos Realm is uppercase "domain"
+  if $kerb_realm == undef {
+    $kerb_realm = upcase($facts['networking']['domain'])
+  }
   # Ensure Local users authenticate locally
   # NOTE: root and virtuser will be handled elsewhere
   $local_users = split($facts['aix_local_users'], ' ')
