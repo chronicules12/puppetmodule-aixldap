@@ -13,6 +13,6 @@ if [ `uname` == 'AIX' ]; then
     exclude=$(echo "$tmpstring" | cut -c 2-)
 
     ## 'users' are non-standard users discovered, could be appuser/realuser
-    users=$(lsuser ALL | awk '{print $1}' |egrep -v "$exclude" | xargs echo)
+    users=$(lsuser -R files ALL | awk '{print $1}' |egrep -v "$exclude" | xargs echo)
     echo "aix_local_users=${users}"
 fi
