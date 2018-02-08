@@ -30,7 +30,6 @@ aixldap::ldap_cfg_options:
   searchmode: ALL
   ldapport: 389
   ldapsslport: 636
-  useSSL: yes
   userclasses: user,person,organizationalperson
   groupclasses: group
   userattrmappath: /etc/security/ldap/sfur2user.map

@@ -71,6 +71,7 @@ class aixldap::configure {
     ldapsslkeypwd        => $aixldap::kdb_password_crypted,
     authtype             => $aixldap::auth_type,
     defaultentrylocation => $aixldap::default_loc,
+    useSSL               => $use_ssl_real,
     userattrmappath      => $aixldap::user_map_file,
     groupattrmappath     => $aixldap::group_map_file,
     userbasedn           => "CN=Users,${aixldap::base_dn}",
