@@ -65,6 +65,8 @@ class aixldap (
   include aixldap::configure
 
   # Service
-  #include aixldap::service
+  include aixldap::service
+
+  Class['aixldap::install'] -> Class['aixldap::configure']
 
 }
