@@ -74,6 +74,7 @@ class aixldap::configure {
     owner   => 'root',
     group   => 'system',
     content => template('aixldap/ldap.cfg.erb'),
+    before  => Exec['mksecldap'],
   }
 
 }
