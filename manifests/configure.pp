@@ -50,6 +50,7 @@ class aixldap::configure {
   exec { 'mksecldap':
     command => "mksecldap -c -h \'${aixldap::ldapservers}\' -a \'${aixldap::bind_dn}\' -p \'${aixldap::bind_password}\' -d \'${aixldap::base_dn}\' ${ssl_options} -A ${aixldap::auth_type} -D ${aixldap::default_loc}",
     creates => '/usr/lib/libibmldap.a',
+    before  => File[$aixldap::ldap_cfg_file],
   }
 
 
@@ -77,7 +78,6 @@ class aixldap::configure {
     owner   => 'root',
     group   => 'security',
     content => template('aixldap/ldap.cfg.erb'),
-    before  => Exec['mksecldap'],
     notify  => Service['secldapclntd'],
   }
 
