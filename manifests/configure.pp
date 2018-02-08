@@ -79,4 +79,22 @@ class aixldap::configure {
     before  => Exec['mksecldap'],
   }
 
+  file { $aixldap::user_map_file:
+    ensure  => 'file',
+    owner   => 'root',
+    group   => 'system',
+    mode    => '0644',
+    content => $aixldap::user_map_content,
+    source  => $aixldap::user_map_source,
+  }
+
+  file { $aixldap::group_map_file:
+    ensure  => 'file',
+    owner   => 'root',
+    group   => 'system',
+    mode    => '0644',
+    content => $aixldap::group_map_content,
+    source  => $aixldap::group_map_source,
+  }
+
 }
