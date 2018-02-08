@@ -38,7 +38,7 @@ class aixldap::install {
 
   package { $packages:
     ensure => 'present',
-    source => ${aixldap::pkg_src_path},
+    source => $aixldap::pkg_src_path,
   }
 
 }
