@@ -73,7 +73,7 @@ class aixldap::configure {
     ensure  => 'file',
     owner   => 'root',
     group   => 'system',
-    content => template(aixldap/ldap.cfg.erb),
+    content => template('aixldap/ldap.cfg.erb'),
   }
 
 }
