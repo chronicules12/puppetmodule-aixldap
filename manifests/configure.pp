@@ -38,6 +38,7 @@ class aixldap::configure {
       refreshonly => true,
       require     => Exec['create-keydb'],
       before      => Exec['mksecldap'],
+      notify      => Service['secldapclntd'],
     }
 
     $ssl_options = "-n 636 -k \'${kdb_file}\' -w \'${aixldap::kdb_password}\'"
@@ -77,6 +78,7 @@ class aixldap::configure {
     group   => 'system',
     content => template('aixldap/ldap.cfg.erb'),
     before  => Exec['mksecldap'],
+    notify  => Service['secldapclntd'],
   }
 
   file { $aixldap::user_map_file:
@@ -86,6 +88,7 @@ class aixldap::configure {
     mode    => '0644',
     content => $aixldap::user_map_content,
     source  => $aixldap::user_map_source,
+    notify  => Service['secldapclntd'],
   }
 
   file { $aixldap::group_map_file:
@@ -95,6 +98,7 @@ class aixldap::configure {
     mode    => '0644',
     content => $aixldap::group_map_content,
     source  => $aixldap::group_map_source,
+    notify  => Service['secldapclntd'],
   }
 
 }

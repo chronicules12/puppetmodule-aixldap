@@ -7,6 +7,9 @@ aixldap::kdb_password: ChangeMe!12345
 aixldap::kdb_password_crypted: '{DESv2}B264CA89603640B735E5EFA3EA4D68789D1F7F57F0 BC7E1'
 aixldap::kerb_realm: null
 
+aixldap::service_ensure: running
+aixldap::service_enable: true
+
 aixldap::ssl_ca_cert_file: /usr/lib/security/adldap.crt
 aixldap::ssl_ca_cert_label: adldap
 aixldap::ssl_ca_cert_content: null
