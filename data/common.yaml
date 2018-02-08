@@ -32,8 +32,6 @@ aixldap::ldap_cfg_options:
   ldapsslport: 636
   userclasses: user,person,organizationalperson
   groupclasses: group
-  userattrmappath: /etc/security/ldap/sfur2user.map
-  groupattrmappath: /etc/security/ldap/sfur2group.map
 
 aixldap::use_ssl: 'no'
 
