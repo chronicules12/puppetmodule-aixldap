@@ -30,7 +30,7 @@ class aixldap::install {
   ]
 
   # Naughty Install
-  $pkg_list = $packages.expand(' ')
+  $pkg_list = join($packages, ' ')
   exec {'install-aixldap-packages-all-at-once':
     command => "installp -acNgXY -d ${aixldap::pkg_src_path} ${pkg_list}",
     unless  => "lslpp -lc ${pkg_list}",
