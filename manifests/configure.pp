@@ -4,7 +4,14 @@
 class aixldap::configure {
   assert_private('Please use aixldap main class')
 
-  if $aixldap::use_ssl {
+  $use_ssl = $aixldap::use_ssl
+  $use_ssl_real = $use_ssl ? {
+    true    => 'yes',
+    false   => 'no',
+    default => $aixldap::use_ssl
+  }
+
+  if ($use_ssl_real == 'yes' or $use_ssl_real == 'SSL' or $use_ssl == 'TLS') {
     # SSL Certificate
     file { $aixldap::ssl_ca_cert_file:
       ensure  => 'file',

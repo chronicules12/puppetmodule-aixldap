@@ -36,7 +36,7 @@ aixldap::ldap_cfg_options:
   userattrmappath: /etc/security/ldap/sfur2user.map
   groupattrmappath: /etc/security/ldap/sfur2group.map
 
-aixldap::use_ssl: true
+aixldap::use_ssl: 'no'
 
 lookup_options:
   aixldap::ldap_cfg_options:
