@@ -4,14 +4,7 @@
 class aixldap::configure {
   assert_private('Please use aixldap main class')
 
-  $use_ssl = $aixldap::use_ssl
-  $use_ssl_real = $use_ssl ? {
-    true    => 'yes',
-    false   => 'no',
-    default => $aixldap::use_ssl
-  }
-
-  if ($use_ssl_real == 'yes' or $use_ssl_real == 'SSL' or $use_ssl == 'TLS') {
+  if ($aixldap::use_ssl == 'yes' or $aixldap::use_ssl == 'SSL' or $aixldap::use_ssl == 'TLS') {
     # SSL Certificate
     file { $aixldap::ssl_ca_cert_file:
       ensure  => 'file',
@@ -71,7 +64,7 @@ class aixldap::configure {
     ldapsslkeypwd        => $aixldap::kdb_password_crypted,
     authtype             => $aixldap::auth_type,
     defaultentrylocation => $aixldap::default_loc,
-    useSSL               => $use_ssl_real,
+    useSSL               => $aixldap::use_ssl,
     userattrmappath      => $aixldap::user_map_file,
     groupattrmappath     => $aixldap::group_map_file,
     userbasedn           => "CN=Users,${aixldap::base_dn}",

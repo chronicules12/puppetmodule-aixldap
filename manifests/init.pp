@@ -35,7 +35,7 @@ class aixldap (
   Optional[String] $kdb_password, # hiera
   Optional[String] $kdb_password_crypted, #hiera
   Optional[String] $kerb_realm, # hiera
-  Enum['yes','SSL','TLS','NONE','no', true, false] $use_ssl, # hiera
+  Enum['yes','SSL','TLS','NONE','no'] $use_ssl, # hiera
 ) {
 
   # Ensure Kerberos Realm is uppercase, default to "domain"
