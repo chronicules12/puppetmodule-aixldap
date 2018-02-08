@@ -64,9 +64,9 @@ class aixldap::configure {
     defaultentrylocation => $aixldap::default_loc,
     userattrmappath      => $aixldap::user_map_file,
     groupattrmappath     => $aixldap::group_map_file,
-    userbasedn           => "CN=Users,${aixldap::basedn}",
-    groupbaseddn         => "OU=Microsoft Exchange Security Groups,${aixldap::basedn}",
-    hostbaseddn          => "OU=Disabled,OU=ENT-Services,${aixldap::basedn}",
+    userbasedn           => "CN=Users,${aixldap::base_dn}",
+    groupbasedn          => "OU=Microsoft Exchange Security Groups,${aixldap::base_dn}",
+    hostbasedn           => "OU=Disabled,OU=ENT-Services,${aixldap::base_dn}",
   } )
 
   file { $aixldap::ldap_cfg_file:
