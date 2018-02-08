@@ -7,7 +7,3 @@ defaults:
 hierarchy:
   - name: "common"
     path: "common.yaml"
-lookup_options:
-  aixldap::ldap_cfg_options:
-    merge:
-      strategy: deep

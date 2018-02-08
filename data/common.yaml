@@ -33,3 +33,8 @@ aixldap::ldap_cfg_options:
   groupattrmappath: /etc/security/ldap/sfur2group.map
 
 aixldap::use_ssl: true
+
+lookup_options:
+  aixldap::ldap_cfg_options:
+    merge:
+      strategy: deep
