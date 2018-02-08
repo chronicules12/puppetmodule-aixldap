@@ -28,14 +28,14 @@ class aixldap (
   Optional[String] $group_map_source,
   String $ldap_cfg_file, #hiera
   Optional[Hash] $ldap_cfg_options, # hiera
-  String $auth_type, # hiera
+  Enum['unix_auth','ldap_auth'] $auth_type, # hiera
   String $default_loc, # hiera
   String $domain, # hiera
   String $kdb_file, # hiera
   Optional[String] $kdb_password, # hiera
   Optional[String] $kdb_password_crypted, #hiera
   Optional[String] $kerb_realm, # hiera
-  Boolean $use_ssl, # hiera
+  Enum['yes','SSL','TLS','NONE','no', true, false] $use_ssl, # hiera
 ) {
 
   # Ensure Local users authenticate locally
