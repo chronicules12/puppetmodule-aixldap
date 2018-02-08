@@ -103,7 +103,7 @@ class aixldap::configure {
 
   # Kerberos Config (crutch exec)
   exec { 'mkkrb5clnt':
-    command => "mkkrb5clnt  -l ${aixldap::ldapservers} -r ${aixldap::krb_realm} -d ${aixldap::domain} -i LDAP -D",
+    command => "mkkrb5clnt  -l ${aixldap::ldapservers} -r ${aixldap::krb_realm_real} -d ${aixldap::domain} -i LDAP -D",
     creates => '/etc/krb5/krb5.conf',
   }
 
