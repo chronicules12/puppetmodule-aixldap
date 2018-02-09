@@ -131,7 +131,7 @@ class aixldap::configure {
     # workaround for: https://github.com/bwilcox/chsec/issues/2
     exec { 'chsec-user-default-SYSTEM':
       command => 'chsec -f /etc/security/user -s default -a SYSTEM="compat or KRB5LDAP"',
-      onlyif  => 'lssec -f /etc/security/user -s default -a SYSTEM | awk -F= \'{print $2}\' | grep -q "compat or KRB5LDAP"',
+      unless  => 'lssec -f /etc/security/user -s default -a SYSTEM | awk -F= \'{print $2}\' | grep -q "compat or KRB5LDAP"',
     }
   }
 
