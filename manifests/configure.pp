@@ -108,4 +108,49 @@ class aixldap::configure {
     creates => '/etc/krb5/krb5.conf',
   }
 
+  if (aixldap::enable_ldap) {
+    chsec { 'user-default-registry':
+      ensure    => present,
+      file      => '/etc/security/user',
+      stanza    => 'default',
+      attribute => 'registry',
+      value     => 'KRB5LDAP',
+      require   => Service['secldapclntd'],
+    }
+
+    chsec { 'user-default-SYSTEM':
+      ensure    => present,
+      file      => '/etc/security/user',
+      stanza    => 'default',
+      attribute => 'SYSTEM',
+      value     => 'compat or KRB5LDAP',
+      require   => Service['secldapclntd'],
+    }
+  }
+
+  # Lets also places these three files
+  file { '/etc/security/mkuser.default':
+    ensure => 'file',
+    source => 'puppet:///modules/aixldap/mkuser.default',
+    owner  => 'root',
+    group  => 'security',
+    mode   => '0640',
+  }
+
+  file { '/etc/methods.cfg':
+    ensure => 'file',
+    source => 'puppet:///modules/aixldap/methods.cfg',
+    owner  => 'root',
+    group  => 'system',
+    mode   => '0664',
+  }
+
+  file { '/etc/netsvc.conf':
+    ensure => 'file',
+    source => 'puppet:///modules/netsvc.conf',
+    owner  => 'root',
+    group  => 'system',
+    mode   => '0664',
+  }
+
 }
