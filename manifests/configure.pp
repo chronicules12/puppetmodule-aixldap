@@ -147,7 +147,7 @@ class aixldap::configure {
 
   file { '/etc/netsvc.conf':
     ensure => 'file',
-    source => 'puppet:///modules/netsvc.conf',
+    source => 'puppet:///modules/aixldap/netsvc.conf',
     owner  => 'root',
     group  => 'system',
     mode   => '0664',
