@@ -116,15 +116,22 @@ class aixldap::configure {
       attribute => 'registry',
       value     => 'KRB5LDAP',
       require   => Service['secldapclntd'],
+
     }
 
-    chsec { 'user-default-SYSTEM':
-      ensure    => present,
-      file      => '/etc/security/user',
-      stanza    => 'default',
-      attribute => 'SYSTEM',
-      value     => 'compat or KRB5LDAP',
-      require   => Service['secldapclntd'],
+    # chsec { 'user-default-SYSTEM':
+    #   ensure    => present,
+    #   file      => '/etc/security/user',
+    #   stanza    => 'default',
+    #   attribute => 'SYSTEM',
+    #   value     => 'compat or KRB5LDAP',
+    #   require   => Service['secldapclntd'],
+    #   }
+
+    # workaround for: https://github.com/bwilcox/chsec/issues/2
+    exec { 'chsec-user-default-SYSTEM':
+      command => 'chsec -f /etc/security/user -s default -a SYSTEM="compat or KRB5LDAP"',
+      onlyif  => 'lssec -f /etc/security/user -s default -a SYSTEM | awk -F= \'{print $2}\' | grep -q \'"compat or KRB5LDAP"\'',
     }
   }
 
