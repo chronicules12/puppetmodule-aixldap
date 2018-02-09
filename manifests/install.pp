@@ -29,16 +29,16 @@ class aixldap::install {
                 'idsldap.cltjava62.rte',
   ]
 
-  # Naughty Install
+  # Workaround Package Install Issue
   $pkg_list = join($packages, ' ')
   exec {'install-aixldap-packages-all-at-once':
     command => "installp -acNgXY -d ${aixldap::pkg_src_path} ${pkg_list}",
-    unless  => "lslpp -lc ${pkg_list}",
+    unless  => "lslpp -lc ${pkg_list} > /dev/null",
   }
 
-  package { $packages:
-    ensure => 'present',
-    source => $aixldap::pkg_src_path,
-  }
+  # package { $packages:
+  #   ensure => 'present',
+  #   source => $aixldap::pkg_src_path,
+  # }
 
 }
