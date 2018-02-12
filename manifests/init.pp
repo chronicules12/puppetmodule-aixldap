@@ -48,8 +48,9 @@ class aixldap (
   $local_users.each |$user| {
     if !defined(User[$user]) {
       user { $user:
-        ensure     => 'present',
-        attributes => [
+        ensure         => 'present',
+        ia_load_module => 'files',
+        attributes     => [
           'SYSTEM=compat',
           'registry=files',
         ],
