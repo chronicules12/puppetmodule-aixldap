@@ -138,7 +138,7 @@ class aixldap::configure {
     }
 
     # This will cause the user's to be modified after LDAP is activated
-    Chsec['user-default-registry'] -> Exec['chsec-user-default-SYSTEM'] -> User <| |>
+    Chsec['user-default-registry'] -> Exec['chsec-user-default-SYSTEM'] -> User <| title != 'root' |>
   }
 
   # Lets also places these three files
