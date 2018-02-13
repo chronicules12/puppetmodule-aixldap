@@ -136,6 +136,9 @@ class aixldap::configure {
       unless  => 'lssec -f /etc/security/user -s default -a SYSTEM | awk -F= \'{print $2}\' | grep -q "compat or KRB5LDAP"',
       require   => Service['secldapclntd'],
     }
+
+    # This will cause the user's to be modified after LDAP is activated
+    Chsec['user-default-registry'] -> Exec['chsec-user-default-SYSTEM'] -> User <| |>
   }
 
   # Lets also places these three files
