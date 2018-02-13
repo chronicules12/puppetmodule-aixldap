@@ -51,6 +51,7 @@ class aixldap::configure {
     command => "mksecldap -c -h \'${aixldap::ldapservers}\' -a \'${aixldap::bind_dn}\' -p \'${aixldap::bind_password}\' -d \'${aixldap::base_dn}\' ${ssl_options} -A ${aixldap::auth_type} -D ${aixldap::default_loc}",
     creates => '/usr/lib/libibmldap.a',
     before  => File[$aixldap::ldap_cfg_file],
+    timeout => 600,
   }
 
 
@@ -106,6 +107,7 @@ class aixldap::configure {
   exec { 'mkkrb5clnt':
     command => "mkkrb5clnt  -l ${aixldap::ldapservers} -r ${aixldap::kerb_realm_real} -d ${aixldap::domain} -i LDAP -D",
     creates => '/etc/krb5/krb5.conf',
+    require => Exec['mksecldap'],
   }
 
   if (aixldap::enable_ldap) {
@@ -132,6 +134,7 @@ class aixldap::configure {
     exec { 'chsec-user-default-SYSTEM':
       command => 'chsec -f /etc/security/user -s default -a SYSTEM="compat or KRB5LDAP"',
       unless  => 'lssec -f /etc/security/user -s default -a SYSTEM | awk -F= \'{print $2}\' | grep -q "compat or KRB5LDAP"',
+      require   => Service['secldapclntd'],
     }
   }
 
