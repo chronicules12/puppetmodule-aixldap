@@ -34,7 +34,7 @@ class aixldap::configure {
 
     # NOTE: If the keydb file exists, but has the wrong password, this will fail
     exec { 'trust-adldap-cert':
-      command     => "gsk8capicmd_64 -cert -add -db \'${kdb_file}\' -pw \'${aixldap::kdb_password}\' -type cms -file \'${aixldap::ssl_ca_cert_file}\' -trust enable -format ascii -label \'${aixldap::ssl_ca_cert_label}\'",
+      command     => "gsk8capicmd_64 -cert -add -db \'${kdb_file}\' -pw \'${aixldap::kdb_password}\' -type cms -file \'${aixldap::ssl_ca_cert_file}\' -trust enable -format ascii -label \'${aixldap::ssl_ca_cert_label}\'", # lint:ignore:140chars
       refreshonly => true,
       require     => Exec['create-keydb'],
       before      => Exec['mksecldap'],
@@ -48,7 +48,7 @@ class aixldap::configure {
 
   # run mksecldap - This seems to do a lot more than just setup the ldap.cfg, so we are going to execute it
   exec { 'mksecldap':
-    command => "mksecldap -c -h \'${aixldap::ldapservers}\' -a \'${aixldap::bind_dn}\' -p \'${aixldap::bind_password}\' -d \'${aixldap::base_dn}\' ${ssl_options} -A ${aixldap::auth_type} -D ${aixldap::default_loc}",
+    command => "mksecldap -c -h \'${aixldap::ldapservers}\' -a \'${aixldap::bind_dn}\' -p \'${aixldap::bind_password}\' -d \'${aixldap::base_dn}\' ${ssl_options} -A ${aixldap::auth_type} -D ${aixldap::default_loc}", # lint:ignore:140chars
     creates => '/usr/lib/libibmldap.a',
     before  => File[$aixldap::ldap_cfg_file],
     timeout => 600,
