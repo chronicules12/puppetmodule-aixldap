@@ -3,11 +3,7 @@
 
 This module will setup your AIX system to use AD LDAP Authentication.
 
-
-
-
-
-
+This module probably over-steps the concept of "do one thing" pretty far. I contend that the GSKit8 stuff and management of the SSL KDB file probably belongs in its own module, but for now its a self contained "setup my ldap authentication" module. This module also attempts to make sure that local accounts will have `SYSTEM=compat registry=files` added to them so that they still work.
 
 #### Table of Contents
 
@@ -23,55 +19,78 @@ This module will setup your AIX system to use AD LDAP Authentication.
 
 ## Description
 
-Start with a one- or two-sentence summary of what the module does and/or what problem it solves. This is your 30-second elevator pitch for your module. Consider including OS/Puppet version it works with.
-
-You can give more descriptive information in a second paragraph. This paragraph should answer the questions: "What does this module *do*?" and "Why would I use it?" If your module has a range of functionality (installation, configuration, management, etc.), this is the time to mention it.
+The  davita-aixldap module will install the necessary packages and configure Active Directory (AD) Kerberos LDAP authentication.
 
 ## Setup
 
-### What aixldap affects **OPTIONAL**
+### What aixldap affects
 
-If it's obvious what your module touches, you can skip this section. For example, folks can probably figure out that your mysql_instance module affects their MySQL instances.
+* Installs idsldap.clnt, krb5 and GSKit8 packages
+* Setup a kdb file to trust the AD CA cert for SSL
+* Configure ldap (mksecldap) and set some custom parameters in ldap.cfg.
+* Optionally configure custom user_map and group_map files.
+* Configure Kerberos (mkkrb5clnt)
+* Optionally enable (activate) LDAP authentication.
+* Configure /etc/security/mkuser.default, /etc/methods.cfg and /etc/netsvc.conf appropriate for LDAP authentication (making local users local)
+* Start LDAP services (secldapclntd)
+* Ensures that local users have appropriate attributes set to work after LDAP authentication is enabled.
 
-If there's more that they should know about, though, this is the place to mention:
+### Setup Requirements
 
-* Files, packages, services, or operations that the module will alter, impact, or execute.
-* Dependencies that your module automatically installs.
-* Warnings or other important notices.
-
-### Setup Requirements **OPTIONAL**
-
-* You must have the LDAP packages hosted somewhere accessible to the AIX system.
+* You must have the LDAP packages hosted somewhere accessible to the AIX system. Currently the default
+location to stage them is `/tmp/pkg`. You may want to stage them at provisioning time or make them available over NFS.
+* You should also *know* the directory you are binding to. You will likely need several details that are not readily available to a casual user.
 
 ### Beginning with aixldap
 
-The very basic steps needed for a user to get the module up and running. This can include setup steps, if necessary, or it can be an example of the most basic use of the module.
+At the most basic level, this module is going to require a few values in hieradata (or in the class call):
+
+* basedn - usually something like dc=DOMAIN,dc=COM
+* binddn - account used to bind for ldap searches (currently required)
+* bindpw - password for bind account
+* bindpw_crypted (use secldapclntd -e "thepassword")
+* ldapservers - comma separated list of ldapservers
+
+If you want to use SSL, you will also need to provide:
+* use_ssl: 'yes' (if you use hiera, make sure yes is in quotes or it will come back as the boolean true)
+* ssl_ca_cert_content (or ssl_ca_cert_file)
+
+There are many other parameters that you can set to customize other parts. Please refer to the [manifests/init.pp] code for details.
 
 ## Usage
 
-This section is where you describe how to customize, configure, and do the fancy stuff with your module here. It's especially helpful if you include usage examples and code samples for doing things with your module.
+AIX base profile:
+```
+# Specify this as early as possible in your AIX Base profile so that ANY users created will have this in scope.
+User {
+  ia_load_module => 'files',
+  attributes     => ['SYSTEM=compat','registry=files']
+}
+
+include aixldap
+```
+
+Hiera:
+```
+aixldap::basedn: dc=mydomain,dc=com
+aixldap::binddn: cn=myldapuser,ou=People,dc=mydomain,dc=com
+aixldap::bindpw: ENC.........please_use_eyaml!
+aixldap::bindpw_crypted: (use secldapclntd -e 'bind_password') ... and maybe use eymal too?
+aixldap::ldapservers: adserver.sub.domain.com
+```
 
 ## Reference
 
-Users need a complete list of your module's classes, types, defined types providers, facts, and functions, along with the parameters for each. You can provide this list either via Puppet Strings code comments or as a complete list in the README Reference section.
-
-* If you are using Puppet Strings code comments, this Reference section should include Strings information so that your users know how to access your documentation.
-
-* If you are not using Puppet Strings, include a list of all of your classes, defined types, and so on, along with their parameters. Each element in this listing should include:
-
-  * The data type, if applicable.
-  * A description of what the element does.
-  * Valid values, if the data type doesn't make it obvious.
-  * Default value, if any.
+(need to setup puppet strings)
 
 ## Limitations
 
-This is where you list OS compatibility, version compatibility, etc. If there are Known Issues, you might want to include them under their own heading here.
+This is only compatible with AIX. We have only tested it on AIX 7.1. TL2 and TL4. NOTE that the idsldap* packages are TL specific. Check your `oslevel -s` output (`facter os.release.full`)
 
 ## Development
 
-Since your module is awesome, other users will want to play with it. Let them know what the ground rules for contributing are.
+Feel free to fork/cone and submit pull requests.
 
 ## Release Notes/Contributors/Etc. **Optional**
 
-If you aren't using changelog, put your release notes here (though you should consider using changelog). You can also add any additional sections you feel are necessary or important to include here. Please use the `## ` header.
+See [CHANGELOG.md].
