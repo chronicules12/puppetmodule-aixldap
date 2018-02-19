@@ -52,6 +52,7 @@ At the most basic level, this module is going to require a few values in hierada
 * ldapservers - comma separated list of ldapservers
 
 If you want to use SSL, you will also need to provide:
+
 * use_ssl: 'yes' (if you use hiera, make sure yes is in quotes or it will come back as the boolean true)
 * ssl_ca_cert_content (or ssl_ca_cert_file)
 
@@ -60,7 +61,8 @@ There are many other parameters that you can set to customize other parts. Pleas
 ## Usage
 
 AIX base profile:
-```
+
+```puppet
 # Specify this as early as possible in your AIX Base profile so that ANY users created will have this in scope.
 User {
   ia_load_module => 'files',
@@ -71,7 +73,8 @@ include aixldap
 ```
 
 Hiera:
-```
+
+```yaml
 aixldap::basedn: dc=mydomain,dc=com
 aixldap::binddn: cn=myldapuser,ou=People,dc=mydomain,dc=com
 aixldap::bindpw: ENC.........please_use_eyaml!
