@@ -40,6 +40,49 @@ The  davita-aixldap module will install the necessary packages and configure Act
 * You must have the LDAP packages hosted somewhere accessible to the AIX system. Currently the default
 location to stage them is `/tmp/pkg`. You may want to stage them at provisioning time or make them available over NFS.
 * You should also *know* the directory you are binding to. You will likely need several details that are not readily available to a casual user.
+* Example code to use a "temporary" NFS mount:
+
+```puppet
+# AIX Package Repo - This content is not specifically profile material
+class profile::aix_pkg_repo (
+  String $repo_mount,
+  String $repo_path = '/var/run/pkg_repo',
+)
+  # Create mountpoint
+  file { $repo_path:
+    ensure => directory,
+    before => Mount[$repo_path],
+  }
+
+  # Create filesystem mount reference (do not mount)
+  mount { $repo_path:
+    ensure  => 'unmounted',
+    atboot  => false,
+    device  => $repo_mount,
+    fstype  => 'nfs',
+    options => 'ro,fg,intr'
+  }
+
+  # List dependencies on this repo_path
+  $pkg_repo_dependencies = [
+    Exec['install-aixldap-packages-all-at-once'],
+    #Package['rpm.rte'],
+  ]
+
+  # Make sure the dependencies process before the mountpoint is unmounted again.
+  $pkg_repo_dependencies.each | $res | {
+    # This may seem backwards, but remember the "Mount[$repo_path]" will actually unmount
+    $res -> Mount[$repo_path]
+  }
+
+  # This will *mount* the pkg_repo before changing the dependent resources
+  transition { "mount ${repo_path}":
+    resource   => Mount[$repo_path],
+    attributes => { ensure => 'mounted' },
+    prior_to   => $pkg_repo_dependencies,
+  }
+}
+```
 
 ### Beginning with aixldap
 
@@ -84,7 +127,7 @@ aixldap::ldapservers: adserver.sub.domain.com
 
 ## Reference
 
-(need to setup puppet strings)
+See /doc folder
 
 ## Limitations
 
@@ -96,4 +139,4 @@ Feel free to fork/cone and submit pull requests.
 
 ## Release Notes/Contributors/Etc. **Optional**
 
-See [CHANGELOG.md].
+See [/CHANGELOG.md].
