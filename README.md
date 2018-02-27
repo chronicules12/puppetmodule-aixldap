@@ -1,4 +1,3 @@
-
 # aixldap
 
 This module will setup your AIX system to use AD LDAP Authentication.
@@ -38,8 +37,10 @@ The  davita-aixldap module will install the necessary packages and configure Act
 ### Setup Requirements
 
 * You must have the LDAP packages hosted somewhere accessible to the AIX system. Currently the default
-location to stage them is `/tmp/pkg`. You may want to stage them at provisioning time or make them available over NFS.
-* You should also *know* the directory you are binding to. You will likely need several details that are not readily available to a casual user.
+location to stage them is `/tmp/pkg`. You may want to stage them at provisioning time or make them available over NFS ([https://forge.puppet.com/puppet/autofs](autofs))
+* You should also *know* the LDAP directory you are binding to. You will likely need several details that are not readily available to a casual user.
+* You will need a BindDN and Password for searching the directory (service account). - NOTE: This may not be strictly required in all cases, but this code requires it.
+* If your directory uses SSL, you will need the CA Certificate, as LDAP is very picky about SSL.
 * Example code to use a "temporary" NFS mount:
 
 ```puppet
