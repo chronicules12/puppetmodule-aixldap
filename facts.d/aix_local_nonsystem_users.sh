@@ -1,4 +1,4 @@
-#!/bin/ksh
+#!/bin/sh
 # This will get a list of local users that are not a common system user.
 # These local users will have some attributes set to ensure they authenticate locally.
 PATH='/usr/bin:/usr/sbin'
