@@ -155,7 +155,7 @@ class aixldap::configure {
     source => 'puppet:///modules/aixldap/methods.cfg',
     owner  => 'root',
     group  => 'system',
-    mode   => '0664',
+    mode   => '0644',
   }
 
   file { '/etc/netsvc.conf':
@@ -163,7 +163,7 @@ class aixldap::configure {
     source => 'puppet:///modules/aixldap/netsvc.conf',
     owner  => 'root',
     group  => 'system',
-    mode   => '0664',
+    mode   => '0644',
   }
 
 }
