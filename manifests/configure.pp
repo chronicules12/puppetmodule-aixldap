@@ -118,38 +118,40 @@ class aixldap::configure {
       attribute => 'registry',
       value     => 'KRB5LDAP',
       require   => Service['secldapclntd'],
-
     }
 
-    # chsec { 'user-default-SYSTEM':
-    #   ensure    => present,
-    #   file      => '/etc/security/user',
-    #   stanza    => 'default',
-    #   attribute => 'SYSTEM',
-    #   value     => 'compat or KRB5LDAP',
-    #   require   => Service['secldapclntd'],
-    #   }
-
-    # workaround for: https://github.com/bwilcox/chsec/issues/2
-    exec { 'chsec-user-default-SYSTEM':
-      command => 'chsec -f /etc/security/user -s default -a SYSTEM="compat or KRB5LDAP"',
-      unless  => 'lssec -f /etc/security/user -s default -a SYSTEM | awk -F= \'{print $2}\' | grep -q "compat or KRB5LDAP"',
-      require => Service['secldapclntd'],
+    chsec { 'user-default-SYSTEM':
+      ensure    => present,
+      file      => '/etc/security/user',
+      stanza    => 'default',
+      attribute => 'SYSTEM',
+      value     => 'compat or KRB5LDAP',
+      require   => Service['secldapclntd'],
     }
 
-    # This will cause the user's to be modified after LDAP is activated
-    Chsec['user-default-registry'] -> Exec['chsec-user-default-SYSTEM'] -> User <| title != 'root' |>
+    # This will cause the user's attributes to be modified after defaults are changed
+    Chsec['user-default-registry', 'user-default-SYSTEM'] -> User <| title != 'root' |>
   }
 
-  # Lets also places these three files
-  file { '/etc/security/mkuser.default':
-    ensure => 'file',
-    source => 'puppet:///modules/aixldap/mkuser.default',
-    owner  => 'root',
-    group  => 'security',
-    mode   => '0640',
+  # Ensure new local users are configured with SYSTEM=compat and registry=files
+  ['user', 'admin'].each | String $stanza | {
+    chsec { "mkuser.default-${stanza}-system":
+      ensure    => present,
+      file      => '/etc/security/mkuser.default',
+      stanza    => $stanza,
+      attribute => 'SYSTEM',
+      value     => 'compat',
+    }
+    chsec { "mkuser.default-${stanza}-registry":
+      ensure    => present,
+      file      => '/etc/security/mkuser.default',
+      stanza    => $stanza,
+      attribute => 'registry',
+      value     => 'files',
+    }
   }
 
+  # Lets just place this file - chsec is acting strange about this one
   file { '/etc/methods.cfg':
     ensure => 'file',
     source => 'puppet:///modules/aixldap/methods.cfg',
@@ -158,12 +160,13 @@ class aixldap::configure {
     mode   => '0644',
   }
 
-  file { '/etc/netsvc.conf':
-    ensure => 'file',
-    source => 'puppet:///modules/aixldap/netsvc.conf',
-    owner  => 'root',
-    group  => 'system',
-    mode   => '0644',
+  # Manage /etc/netsvc.conf hosts line
+  if $aixldap::netsvc_hosts {
+    file_line { 'netsvc.conf-hosts':
+      path  => '/etc/netsvc.conf',
+      line  => "hosts = ${aixldap::netsvc_hosts}",
+      match => '^hosts',
+    }
   }
 
 }

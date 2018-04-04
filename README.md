@@ -18,7 +18,7 @@ This module probably over-steps the concept of "do one thing" pretty far. I cont
 
 ## Description
 
-The  davita-aixldap module will install the necessary packages and configure Active Directory (AD) Kerberos LDAP authentication.
+The aixldap module will install the necessary packages and configure Active Directory (AD) Kerberos LDAP authentication.
 
 ## Setup
 
