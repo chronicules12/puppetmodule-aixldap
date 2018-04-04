@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 * Add missing "4" on the end of the program_64 for NIS (like that matters)
 * Fix /etc/security/mkuser.defaults is no longer replaced, specific attributes are set using chsec
 * Remove workaround for chsec values with spaces, with chsec update to 0.1.4
+* Updated /etc/netsvc.conf handling to be more advanced (allow overriding hosts line)
 
 ## Release 0.1.1
 
