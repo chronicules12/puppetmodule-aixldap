@@ -12,26 +12,28 @@ describe 'aixldap', type: 'class' do
   end
 
   test_on = {
-    :hardwaremodels => [ "/^IBM/"],
-    :facterversion  => '3.9',
+    hardwaremodels: ['/^IBM/'],
+    facterversion: '3.9',
   }
 
   on_supported_os(test_on).each do |os, facts|
     context "on #{os}" do
-      let(:facts)do
-        facts.merge({
-          :aix_local_users => 'one two three',
-        })
+      let(:facts) do
+        facts.merge(
+          aix_local_users: 'one two three',
+        )
       end
+
       it { is_expected.to compile }
     end
   end
 
+  # Test the failing case, for example on RedHat
   context 'on unsupported OS' do
     let(:facts) do
       {
-        :osfamily => 'RedHat',
-        :aix_local_users => '',
+        osfamily: 'RedHat',
+        aix_local_users: '',
       }
     end
 
