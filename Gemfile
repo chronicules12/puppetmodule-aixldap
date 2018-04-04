@@ -34,6 +34,7 @@ group :development do
   gem "puppet-module-win-dev-r#{minor_version}",       require: false, platforms: [:mswin, :mingw, :x64_mingw]
   gem "yard"
   gem "puppet-strings"
+  gem "facterdb", '>= 0.5.1'
 end
 
 puppet_version = ENV['PUPPET_GEM_VERSION']

@@ -114,6 +114,11 @@ class aixldap (
     }
   }
 
+  # Basic safety check - Ensure we are on AIX
+  if $facts['osfamily'] != 'AIX' {
+    fail('This module is only supported on AIX!')
+  }
+
   # Default Path
   Exec {
     path => '/usr/bin:/usr/sbin',
