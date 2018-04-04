@@ -35,6 +35,7 @@ aixldap::ldap_cfg_options:
   groupclasses: group
 
 aixldap::use_ssl: 'no'
+aixldap::netsvc_hosts: local, bind
 
 lookup_options:
   aixldap::ldap_cfg_options:

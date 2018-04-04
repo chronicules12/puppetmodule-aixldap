@@ -61,6 +61,9 @@
 # @param kdb_password Password to "protect" KDB file (Default: ChangeMe!12345)
 # @param kdb_password_crypted Encrypted KDB Password (for ldap.cfg). Use `secldapclntd -e "password"` on
 #   AIX system to generate. (Default: `{DESv2}B264CA89603640B735E5EFA3EA4D68789D1F7F57F0 BC7E1`)
+# @param netsvc_hosts Override the hosts line in /etc/netsvc.conf, which handles gethostbyname order
+#   default: 'local, bind' to eliminate nis_ldap (saves 10-15 seconds at login).
+#   @see https://www.ibm.com/support/knowledgecenter/en/ssw_aix_72/com.ibm.aix.files/netsvc.conf.htm
 #
 #### NOTE: defaults are provided with module level hieradata
 class aixldap (
@@ -93,6 +96,7 @@ class aixldap (
   Optional[String] $kdb_password_crypted, #hiera
   Optional[String] $kerb_realm, # hiera
   Enum['yes','SSL','TLS','NONE','no'] $use_ssl, # hiera
+  Optional[String] $netsvc_hosts, # hiera
 ) {
 
   # Ensure Kerberos Realm is uppercase, default to "domain"

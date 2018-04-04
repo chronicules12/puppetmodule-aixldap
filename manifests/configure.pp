@@ -160,4 +160,13 @@ class aixldap::configure {
     mode   => '0644',
   }
 
+  # Manage /etc/netsvc.conf hosts line
+  if $aixldap::netsvc_hosts {
+    file_line { 'netsvc.conf-hosts':
+      path  => '/etc/netsvc.conf',
+      line  => "hosts = ${aixldap::netsvc_hosts}",
+      match => '^hosts',
+    }
+  }
+
 }
