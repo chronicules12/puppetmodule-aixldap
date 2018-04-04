@@ -129,8 +129,8 @@ class aixldap::configure {
       require   => Service['secldapclntd'],
     }
 
-    # This will cause the user's attributes to be modified after LDAP is activated
-    Chsec['user-default-registry'] -> Chsec['user-default-SYSTEM'] -> User <| title != 'root' |>
+    # This will cause the user's attributes to be modified after defaults are changed
+    Chsec['user-default-registry', 'user-default-SYSTEM'] -> User <| title != 'root' |>
   }
 
   # Ensure new local users are configured with SYSTEM=compat and registry=files
@@ -151,18 +151,10 @@ class aixldap::configure {
     }
   }
 
-  # Lets also places these files
+  # Lets just place this file - chsec is acting strange about this one
   file { '/etc/methods.cfg':
     ensure => 'file',
     source => 'puppet:///modules/aixldap/methods.cfg',
-    owner  => 'root',
-    group  => 'system',
-    mode   => '0644',
-  }
-
-  file { '/etc/netsvc.conf':
-    ensure => 'file',
-    source => 'puppet:///modules/aixldap/netsvc.conf',
     owner  => 'root',
     group  => 'system',
     mode   => '0644',
