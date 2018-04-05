@@ -1,10 +1,14 @@
-# aixldap
+# aixldap [![Build Status](https://travis-ci.org/LarkIT/puppetmodule-aixldap.svg?branch=master)](https://travis-ci.org/LarkIT/puppetmodule-aixldap)
+
+* Source: https://github.com/LarkIT/puppetmodule-aixldap
+* Documentation: https://larkit.github.io/puppetmodule-aixldap/
+* Forge: https://forge.puppet.com/larkit/aixldap
 
 This module will setup your AIX system to use AD LDAP Authentication.
 
 This module probably over-steps the concept of "do one thing" pretty far. I contend that the GSKit8 stuff and management of the SSL KDB file probably belongs in its own module, but for now its a self contained "setup my ldap authentication" module. This module also attempts to make sure that local accounts will have `SYSTEM=compat registry=files` added to them so that they still work.
 
-#### Table of Contents
+## Table of Contents
 
 1. [Description](#description)
 2. [Setup - The basics of getting started with aixldap](#setup)
@@ -36,8 +40,7 @@ The aixldap module will install the necessary packages and configure Active Dire
 
 ### Setup Requirements
 
-* You must have the LDAP packages hosted somewhere accessible to the AIX system. Currently the default
-location to stage them is `/tmp/pkg`. You may want to stage them at provisioning time or make them available over NFS / autofs ([puppet-autofs](https://forge.puppet.com/puppet/autofs)).
+* You must have the LDAP packages hosted somewhere accessible to the AIX system. Currently the default location to stage them is `/tmp/pkg`. You may want to stage them at provisioning time or make them available over NFS / autofs ([puppet-autofs](https://forge.puppet.com/puppet/autofs)).
 * You should also *know* the LDAP directory you are binding to. You will likely need several details that are not readily available to a casual user.
 * You will need a BindDN and Password for searching the directory (service account). - NOTE: This may not be strictly required in all cases, but this code requires it.
 * If your directory uses SSL, you will need the CA Certificate, as LDAP is very picky about SSL.
@@ -128,16 +131,16 @@ aixldap::ldapservers: adserver.sub.domain.com
 
 ## Reference
 
-See /doc folder
+See https://larkit.github.io/puppetmodule-aixldap/
 
 ## Limitations
 
-This is only compatible with AIX. We have only tested it on AIX 7.1. TL2 and TL4. NOTE that the idsldap* packages are TL specific. Check your `oslevel -s` output (`facter os.release.full`)
+This is only compatible with AIX. We have only tested it on AIX 7.1 (TL2 and TL4) and AIX 7.2 (TL1). NOTE that the idsldap* packages are TL specific. Check your `oslevel -s` output (`facter os.release.full`)
 
 ## Development
 
 Feel free to fork/cone and submit pull requests.
 
-## Release Notes/Contributors/Etc. **Optional**
+## Release Notes
 
-See [/CHANGELOG.md].
+See [CHANGELOG.md](CHANGELOG.md).
