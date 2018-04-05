@@ -1,4 +1,10 @@
-# aixldap [![Build Status](https://travis-ci.org/LarkIT/puppetmodule-aixldap.svg?branch=master)](https://travis-ci.org/LarkIT/puppetmodule-aixldap)
+# aixldap
+
+[![Build Status](https://travis-ci.org/LarkIT/puppetmodule-aixldap.svg?branch=master)](https://travis-ci.org/LarkIT/puppetmodule-aixldap)
+[![Puppet Forge](https://img.shields.io/puppetforge/v/larkit/aixldap.svg)](https://forge.puppet.com/larkit/aixldap)
+[![Puppet Forge](https://img.shields.io/puppetforge/dt/larkit/aixldap.svg)](https://forge.puppet.com/larkit/aixldap)
+[![Puppet Forge](https://img.shields.io/puppetforge/e/larkit/aixldap.svg)](https://forge.puppet.com/larkit/aixldap)
+[![Puppet Forge](https://img.shields.io/puppetforge/f/larkit/aixldap.svg)](https://forge.puppet.com/larkit/aixldap)
 
 * Source: https://github.com/LarkIT/puppetmodule-aixldap
 * Documentation: https://larkit.github.io/puppetmodule-aixldap/
