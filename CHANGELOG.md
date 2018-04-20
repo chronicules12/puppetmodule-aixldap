@@ -2,6 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release v0.1.3
+* Fix metadata to point to larkit/chsec 0.1.4 (re-release of bwilcox/chsec with fixes)
+
 ## Release 0.1.2
 * Fix a couple permissions related issues
 * Add missing "4" on the end of the program_64 for NIS (like that matters)

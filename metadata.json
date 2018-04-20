@@ -1,6 +1,6 @@
 {
   "name": "larkit-aixldap",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "author": "Tommy McNeely <tommy@lark-it.com>",
   "summary": "Install and Setup client authentication for AIX",
   "license": "Apache-2.0",
