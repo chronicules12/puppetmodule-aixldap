@@ -69,8 +69,8 @@ class aixldap::configure {
     userattrmappath      => $aixldap::user_map_file,
     groupattrmappath     => $aixldap::group_map_file,
     userbasedn           => "CN=Users,${aixldap::base_dn}",
-    groupbasedn          => "OU=Microsoft Exchange Security Groups,${aixldap::base_dn}",
-    hostbasedn           => "OU=Disabled,OU=ENT-Services,${aixldap::base_dn}",
+    groupbasedn          => "OU=Groups,${aixldap::base_dn}",
+    hostbasedn           => "OU=Disabled,${aixldap::base_dn}",
   }
 
   $ldap_cfgs = merge ($ldap_cfg_defaults, $aixldap::ldap_cfg_options)
