@@ -1,4 +1,10 @@
 ### Puppet Managed - MANUAL EDITS WILL BE LOST!
-<%- @ldap_cfgs.sort.map do |key,value| -%>
+<% @ldap_cfgs.sort.map do |key,value| -%>
+<%    if value.is_a?(Array) -%>
+<%      value.each do |subval| -%>
+<%= key %>:<%= subval %>
+<%      end -%>
+<%    else -%>
 <%= key %>:<%= value %>
+<%-   end -%>
 <%- end -%>
