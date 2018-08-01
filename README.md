@@ -135,6 +135,16 @@ aixldap::bindpw_crypted: (use secldapclntd -e 'bind_password') ... and maybe use
 aixldap::ldapservers: adserver.sub.domain.com
 ```
 
+Special Note: If you need to have multiple userbasedn values, you
+can specify them as an array like so:
+
+```yaml
+aixldap::ldap_cfg_options:
+  userbasedn:
+    - OU=Users,OU=UnixTeam,dc=mydomain,dc=com
+    - OU=ServiceAccounts,dc=mydomain,dc=com
+```
+
 ## Reference
 
 See https://larkit.github.io/puppetmodule-aixldap/
