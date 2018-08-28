@@ -4,4 +4,4 @@
 fixtures:
   forge_modules:
      stdlib: "puppetlabs/stdlib"
-     chsec: "bwilcox/chsec"
+     chsec: "larkit/chsec"

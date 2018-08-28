@@ -128,15 +128,10 @@ class aixldap (
     path => '/usr/bin:/usr/sbin',
   }
 
-  # Install Packages
-  include aixldap::install
-
   # Configire
   include aixldap::configure
 
   # Service
   include aixldap::service
-
-  Class['aixldap::install'] -> Class['aixldap::configure']
 
 }
