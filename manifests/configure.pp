@@ -68,7 +68,7 @@ class aixldap::configure {
     useSSL               => $aixldap::use_ssl,
     userattrmappath      => $aixldap::user_map_file,
     groupattrmappath     => $aixldap::group_map_file,
-    userbasedn           => "CN=Users,${aixldap::base_dn}",
+    userbasedn           => "OU=Users,${aixldap::base_dn}",
     groupbasedn          => "OU=Groups,${aixldap::base_dn}",
     hostbasedn           => "OU=Disabled,${aixldap::base_dn}",
   }
