@@ -103,20 +103,13 @@ class aixldap::configure {
     notify  => Service['secldapclntd'],
   }
 
-  # Kerberos Config (crutch exec)
-  exec { 'mkkrb5clnt':
-    command => "mkkrb5clnt  -l ${aixldap::ldapservers} -r ${aixldap::kerb_realm_real} -d ${aixldap::domain} -i LDAP -D",
-    creates => '/etc/krb5/krb5.conf',
-    require => Exec['mksecldap'],
-  }
-
   if (aixldap::enable_ldap) {
     chsec { 'user-default-registry':
       ensure    => present,
       file      => '/etc/security/user',
       stanza    => 'default',
       attribute => 'registry',
-      value     => 'KRB5LDAP',
+      value     => 'LDAP',
       require   => Service['secldapclntd'],
     }
 
@@ -125,7 +118,7 @@ class aixldap::configure {
       file      => '/etc/security/user',
       stanza    => 'default',
       attribute => 'SYSTEM',
-      value     => 'compat or KRB5LDAP',
+      value     => 'LDAP',
       require   => Service['secldapclntd'],
     }
 
